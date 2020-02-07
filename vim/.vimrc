@@ -26,7 +26,8 @@ set visualbell                " don't beep
 set noerrorbells              " don't beep
 set modeline
 set modelines=10 		         " Check for the // vim: entries at the bottom of a file (within 10 lines of top or bottom)
-set hidden
+set hidden                    " something about buffers.  <shrug>
+" set title titlestring=        " required for the read only autoswap plugin
 
 " Search settings
 " ---------------
@@ -63,6 +64,8 @@ set display+=lastline
 if &encoding ==# 'latin1' && has('gui_running')
   set encoding=utf-8
 endif
+
+
 
 " Tab completion
 " --------------
@@ -129,10 +132,44 @@ if v:version > 703 || v:version == 703 && has("patch541")
   set formatoptions+=j " Delete comment character when joining commented lines
 endif
 
+" Highlight when a line goes over 81 characters
+" Doesn't seem to work
+" highlight ColorColumn ctermbg=magenta
+" set colorcolumn=81
+
 " Leader and key remapping
 " Not 100% sure about a bunch of this stuff, but lets try anyway
 " ------------------------
 let mapleader = ","
+
+
+
+" Search Improvements
+" ===================
+" EITHER blink the line containing the match...
+function! HLNext (blinktime)
+    set invcursorline
+    redraw
+    exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+    set invcursorline
+    redraw
+endfunction
+
+" " OR ELSE just highlight the match in red...
+" function! HLNext (blinktime)
+"     let [bufnum, lnum, col, off] = getpos('.')
+"     let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+"     let target_pat = '\c\%#\%('.@/.'\)'
+"     let ring = matchadd('WhiteOnRed', target_pat, 101)
+"     redraw
+"     exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+"     call matchdelete(ring)
+"     redraw
+" endfunction
+
+" This rewires n and N to do the highlighing...
+nnoremap <silent> n   n:call HLNext(0.4)<cr>
+nnoremap <silent> N   N:call HLNext(0.4)<cr>
 
 " Window Management
 " -----------------
@@ -198,6 +235,13 @@ map <leader>J              :wincmd J<cr>
 vnoremap < <gv 
 vnoremap > >gv 
 
+" Writing stuff
+" =============
+" Listtranslate stuffnmap  
+
+nmap ;l   :call ListTrans_toggle_format()<CR>
+vmap ;l   :call ListTrans_toggle_format('visual')<CR>
+
 " PLUGINS!
 " Lets add some plugins bitches
 " -----------------------------
@@ -248,6 +292,11 @@ Plug 'nathanaelkane/vim-indent-guides'
 
 " Move chunks of code around easier
 Plug 'zirrostig/vim-schlepp'
+
+" Tab management
+Plug 'kien/tabman.vim'
+
+
 
 " Initialize plugin system
 call plug#end()
@@ -302,6 +351,14 @@ vmap <unique> <up>    <Plug>SchleppUp
 vmap <unique> <down>  <Plug>SchleppDown
 vmap <unique> <left>  <Plug>SchleppLeft
 vmap <unique> <right> <Plug>SchleppRight
+vmap <unique> D <Plug>SchleppDup
+
+" TabMan management
+let g:tabman_toggle = '<leader>mt'
+let g:tabman_focus  = '<leader>mf'
+let g:tabman_width = 25
+let g:tabman_side = 'left'
+let g:tabman_specials = 0
 
 
 " Set the colorscheme to whatever I feel like
