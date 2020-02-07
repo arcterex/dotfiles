@@ -27,7 +27,6 @@ set noerrorbells              " don't beep
 set modeline
 set modelines=10 		         " Check for the // vim: entries at the bottom of a file (within 10 lines of top or bottom)
 set hidden                    " something about buffers.  <shrug>
-" set title titlestring=        " required for the read only autoswap plugin
 
 " Search settings
 " ---------------
