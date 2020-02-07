@@ -227,20 +227,27 @@ Plug 'junegunn/vim-easy-align'
 " Error checking / syntax checking
 Plug 'vim-syntastic/syntastic'
 
-" Colorscheme
+" Color schemes
 Plug 'junegunn/seoul256.vim'
-
-" another theme
 Plug 'morhetz/gruvbox'
+Plug 'joshdick/onedark.vim'
+Plug 'altercation/vim-colors-solarized'
 
 " Statusline stuff
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'vim-ctrlspace/vim-ctrlspace'
-Plug 'altercation/vim-colors-solarized'
+" Required for airline to show git status
 Plug 'tpope/vim-fugitive'
-Plug 'joshdick/onedark.vim'
+
+" Open buffer / open file search
+Plug 'vim-ctrlspace/vim-ctrlspace'
+
+" Show code indentation
+Plug 'nathanaelkane/vim-indent-guides'
+
+" Move chunks of code around easier
+Plug 'zirrostig/vim-schlepp'
 
 " Initialize plugin system
 call plug#end()
@@ -284,7 +291,20 @@ let g:CtrlSpaceFileEngine = s:vimfiles . '/plugged/vim-ctrlspace' . '/bin/file_e
 " Airline statusbar config
 let g:airline_powerline_fonts = 1
 
-" Set the colorscheme to seoul256
+" Indent plugin
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+
+" vim-schlepp setup - just use arrow keys to move things around
+" Kinda fucking awesome :) 
+vmap <unique> <up>    <Plug>SchleppUp
+vmap <unique> <down>  <Plug>SchleppDown
+vmap <unique> <left>  <Plug>SchleppLeft
+vmap <unique> <right> <Plug>SchleppRight
+
+
+" Set the colorscheme to whatever I feel like
 " colo seoul256
-" colo gruvbox
-colo onedark
+colo gruvbox
+" colo onedark
