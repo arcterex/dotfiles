@@ -296,7 +296,8 @@ Plug 'zirrostig/vim-schlepp'
 " Tab management
 Plug 'kien/tabman.vim'
 
-
+" List translation
+Plug 'soulston/vim-listtrans'
 
 " Initialize plugin system
 call plug#end()
