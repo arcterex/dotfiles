@@ -26,7 +26,6 @@ set visualbell                " don't beep
 set noerrorbells              " don't beep
 set modeline
 set modelines=10 		         " Check for the // vim: entries at the bottom of a file (within 10 lines of top or bottom)
-set hidden                    " something about buffers.  <shrug>
 
 " Search settings
 " ---------------
@@ -133,8 +132,8 @@ endif
 
 " Highlight when a line goes over 81 characters
 " Doesn't seem to work
-" highlight ColorColumn ctermbg=magenta
-" set colorcolumn=81
+highlight ColorColumn ctermbg=magenta
+set colorcolumn=81
 
 " Leader and key remapping
 " Not 100% sure about a bunch of this stuff, but lets try anyway
@@ -177,8 +176,8 @@ map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_ 
 
 " Next and previous tab shortcut to ctrl-l/h
-map  <C-l> :tabn<CR>
-map  <C-h> :tabp<CR>
+" map  <C-l> :tabn<CR>
+" map  <C-h> :tabp<CR>
 
 " Toggle line number mode to ctrl-i
 " Tab for some reason changes this
@@ -234,6 +233,28 @@ map <leader>J              :wincmd J<cr>
 vnoremap < <gv 
 vnoremap > >gv 
 
+" Buffer management
+" This allows buffers to be hidden if you've modified a buffer.
+" This is almost a must if you wish to use buffers in this way.
+set hidden
+
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nmap <leader>T :enew<cr>
+
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>bq :bp <BAR> bd #<CR>
+
+" Show all open buffers and their status
+nmap <leader>bl :ls<CR>
+
 " Writing stuff
 " =============
 " Listtranslate stuffnmap  
@@ -283,9 +304,6 @@ Plug 'vim-airline/vim-airline-themes'
 " Required for airline to show git status
 Plug 'tpope/vim-fugitive'
 
-" Open buffer / open file search
-Plug 'vim-ctrlspace/vim-ctrlspace'
-
 " Show code indentation
 Plug 'nathanaelkane/vim-indent-guides'
 
@@ -297,6 +315,11 @@ Plug 'kien/tabman.vim'
 
 " List translation
 Plug 'soulston/vim-listtrans'
+
+" Fuzzy find plugin that also does buffer management
+" Plug 'junegunn/fzf', { 'do': './install --bin' }
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 
 " Initialize plugin system
 call plug#end()
@@ -322,23 +345,16 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 " CTRL-Space config
-if has('win32')
-    let s:vimfiles = '~/vimfiles'
-    let s:os   = 'windows'
-else
-    let s:vimfiles = '~/.vim'
-    if has('mac') || has('gui_macvim')
-        let s:os = 'darwin'
-    else
-    " elseif has('gui_gtk2') || has('gui_gtk3')
-        let s:os = 'linux'
-    endif
-endif
-
-let g:CtrlSpaceFileEngine = s:vimfiles . '/plugged/vim-ctrlspace' . '/bin/file_engine_' . s:os . '_amd64'
+" Replaced by fzf's :Buffers - mapped to ctrl-space below
 
 " Airline statusbar config
+" ========================
+" Show fancy gliphs
 let g:airline_powerline_fonts = 1
+" Show list of buffers
+let g:airline#extensions#tabline#enabled = 1
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Indent plugin
 let g:indent_guides_enable_on_vim_startup = 1
@@ -360,7 +376,62 @@ let g:tabman_width = 25
 let g:tabman_side = 'left'
 let g:tabman_specials = 0
 
+" Fzf setup
+" =========
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
 
+" [[B]Commits] Customize the options used by 'git log':
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags -R'
+
+" [Commands] --expect expression for directly executing the command
+let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+
+
+" Customize fzf colors to match your color scheme
+" - fzf#wrap translates this to a set of `--color` options
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Hit ctrl-x ctrl-l and some text to complete a previously typed line
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Map finding files to ctrl-p
+nnoremap <C-P> :Files<CR>
+nnoremap <C-I> :Buffers<CR>
+" DFW :( 
+" nnoremap <C-Space> :Buffers<CR>
+
+" Sexier commit log coloring
+let g:fzf_commits_log_options = '--graph --color=always
+  \ --format="%C(yellow)%h%C(red)%d%C(reset)
+  \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
+
+" Map keys for commits and bcommits commands
+nnoremap <silent> <Leader>c  :Commits<CR>
+nnoremap <silent> <Leader>bc :BCommits<CR>
+
+" And for RG (RipGrep)
+nnoremap <Leader>rg :Rg<Space>
+nnoremap <Leader>RG :Rg!<Space>
+
+" Final Config
+" ============
 " Set the colorscheme to whatever I feel like
 " colo seoul256
 colo gruvbox
