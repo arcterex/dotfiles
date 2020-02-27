@@ -322,7 +322,12 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
 " Code completion
-Plug 'ajh17/VimCompletesMe'
+" Plug 'ajh17/VimCompletesMe'
+" https://github.com/lifepillar/vim-mucomplete
+Plug 'lifepillar/vim-mucomplete'
+
+" Vim-jedi - python completion
+Plug 'davidhalter/jedi-vim'
 
 " XCode colour scheme
 Plug 'arzg/vim-colors-xcode'
@@ -422,6 +427,14 @@ nnoremap <C-P> :Files<CR>
 nnoremap <C-I> :Buffers<CR>
 " DFW :( 
 " nnoremap <C-Space> :Buffers<CR>
+
+" Autocomplete with mu-complete config
+" ------------------------------------
+set completeopt+=menuone
+" no prompt completion
+" set completeopt+=noselect
+set shortmess+=c   " Shut off completion messages
+set belloff+=ctrlg " If Vim beeps during completion
 
 " Sexier commit log coloring
 let g:fzf_commits_log_options = '--graph --color=always
