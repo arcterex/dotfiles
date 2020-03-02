@@ -332,6 +332,9 @@ Plug 'davidhalter/jedi-vim'
 " XCode colour scheme
 Plug 'arzg/vim-colors-xcode'
 
+" Parenthasies matching highlighting while inside
+Plug 'andymass/vim-matchup'
+
 " Initialize plugin system
 call plug#end()
 
@@ -339,6 +342,11 @@ call plug#end()
 
 " Plugin specific mappings
 " ------------------------
+" Vim-Matchup for parenthasis / quote / etc matching
+let g:loaded_matchit = 1
+let g:matchup_matchparen_deferred = 1
+let g:matchup_matchparen_hi_surround_always = 1
+
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
