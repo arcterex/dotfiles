@@ -296,6 +296,8 @@ Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
 Plug 'altercation/vim-colors-solarized'
+Plug 'arzg/vim-colors-xcode'
+Plug 'nanotech/jellybeans.vim'
 
 " Statusline stuff
 Plug 'vim-airline/vim-airline'
@@ -328,9 +330,6 @@ Plug 'lifepillar/vim-mucomplete'
 
 " Vim-jedi - python completion
 Plug 'davidhalter/jedi-vim'
-
-" XCode colour scheme
-Plug 'arzg/vim-colors-xcode'
 
 " Parenthasies matching highlighting while inside
 Plug 'andymass/vim-matchup'
@@ -444,6 +443,10 @@ set completeopt+=menuone
 set shortmess+=c   " Shut off completion messages
 set belloff+=ctrlg " If Vim beeps during completion
 
+" jedi-vim
+" disable the preview window
+" autocmd FileType python setlocal completeopt-=preview
+
 " Sexier commit log coloring
 let g:fzf_commits_log_options = '--graph --color=always
   \ --format="%C(yellow)%h%C(red)%d%C(reset)
@@ -489,5 +492,6 @@ end
 " Set the colorscheme to whatever I feel like
 " colo seoul256
 " colo gruvbox
-colo xcodedarkhc
+" colo xcodedarkhc
 " colo onedark
+colo jellybeans
