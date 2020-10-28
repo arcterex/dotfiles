@@ -490,8 +490,10 @@ end
 " Final Config
 " ============
 " Set the colorscheme to whatever I feel like
+" color desert 			      " Default color scheme (will probably need to change this)
 " colo seoul256
 " colo gruvbox
 " colo xcodedarkhc
 " colo onedark
-colo jellybeans
+" colo jellybeans
+colo solarized
