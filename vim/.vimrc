@@ -6,7 +6,7 @@ filetype off                  " Seems to be needed for plugin managers
 " Default look
 " ------------
 " color default
-set bg=dark
+set bg=light
 syn on
 " color desert 			      " Default color scheme (will probably need to change this)
 
@@ -318,9 +318,15 @@ Plug 'kien/tabman.vim'
 " List translation
 Plug 'soulston/vim-listtrans'
 
+" Git Gutter - show add/remove/etc in gutter
+" Commented out due to weirness with solarized light
+" Plug 'airblade/vim-gitgutter'
+
 " Fuzzy find plugin that also does buffer management
 " Plug 'junegunn/fzf', { 'do': './install --bin' }
-Plug '/usr/local/opt/fzf'
+" Plug '/usr/local/opt/fzf'
+" Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " Code completion
@@ -333,6 +339,8 @@ Plug 'davidhalter/jedi-vim'
 
 " Parenthasies matching highlighting while inside
 Plug 'andymass/vim-matchup'
+
+" 
 
 " Initialize plugin system
 call plug#end()
@@ -486,6 +494,24 @@ if executable('fzf')
 else
    " CtrlP fallback
 end
+
+" Git Gutter config
+" let g:gitgutter_max_signs = 500  " default value (Vim < 8.1.0614, Neovim < 0.4.0)
+" let g:gitgutter_max_signs = -1   " default value (otherwise)
+
+" function! GitStatus()
+"  let [a,m,r] = GitGutterGetHunkSummary()
+"  return printf('+%d ~%d -%d', a, m, r)
+"endfunction
+"set statusline+=%{GitStatus()}
+
+" GitGutter config to try to make it not be ugly with solarized light
+"highlight clear SignColumn
+"highlight GitGutterAdd ctermfg=green
+"highlight GitGutterChange ctermfg=yellow
+"highlight GitGutterDelete ctermfg=red
+"highlight GitGutterChangeDelete ctermfg=yellow
+
 
 " Final Config
 " ============
