@@ -319,10 +319,11 @@ Plug 'kien/tabman.vim'
 Plug 'soulston/vim-listtrans'
 
 " Git Gutter - show add/remove/etc in gutter
-" Commented out due to weirness with solarized light
 " Plug 'airblade/vim-gitgutter'
 
 " Fuzzy find plugin that also does buffer management
+" - Use :Files
+" - Use :Rg (search inside files)
 " Plug 'junegunn/fzf', { 'do': './install --bin' }
 " Plug '/usr/local/opt/fzf'
 " Plug 'junegunn/fzf.vim'
@@ -415,7 +416,6 @@ let g:fzf_tags_command = 'ctags -R'
 
 " [Commands] --expect expression for directly executing the command
 let g:fzf_commands_expect = 'alt-enter,ctrl-x'
-
 
 " Customize fzf colors to match your color scheme
 " - fzf#wrap translates this to a set of `--color` options
