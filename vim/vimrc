@@ -6,7 +6,7 @@ filetype off                  " Seems to be needed for plugin managers
 " Default look
 " ------------
 " color default
-set bg=light
+set bg=dark
 syn on
 " color desert 			      " Default color scheme (will probably need to change this)
 
@@ -298,6 +298,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'arzg/vim-colors-xcode'
 Plug 'nanotech/jellybeans.vim'
+Plug 'wojciechkepka/bogster'
 
 " Statusline stuff
 Plug 'vim-airline/vim-airline'
@@ -521,5 +522,5 @@ end
 " colo gruvbox
 " colo xcodedarkhc
 " colo onedark
-" colo jellybeans
-colo solarized
+colo jellybeans
+" colo solarized

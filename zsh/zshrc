@@ -139,5 +139,14 @@ alias cp='cp -i'
 
 alias scp='noglob scp'
 
+mssh() {
+   if [ "$1" != "" ] # or better, if [ -n "$1" ]
+    then
+        ssh -A root@"$1"
+    else
+        echo "Need IP to ssh to"
+    fi
+}
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
