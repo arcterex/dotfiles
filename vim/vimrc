@@ -100,6 +100,7 @@ set viewoptions-=options
 " Syntax extras
 " -------------
 au BufNewFile,BufRead *.json set ft=javascript	" add json syntax highlighting
+autocmd BufNewFile,BufRead *.sls set syntax=yaml
 
 " Filetype stuff
 " --------------
@@ -299,6 +300,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'arzg/vim-colors-xcode'
 Plug 'nanotech/jellybeans.vim'
 Plug 'wojciechkepka/bogster'
+Plug 'arcticicestudio/nord-vim'
 
 " Statusline stuff
 Plug 'vim-airline/vim-airline'
@@ -313,14 +315,16 @@ Plug 'nathanaelkane/vim-indent-guides'
 " Move chunks of code around easier
 Plug 'zirrostig/vim-schlepp'
 
+" Better syntax parsing (I think)
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Tab management
 Plug 'kien/tabman.vim'
 
 " List translation
-Plug 'soulston/vim-listtrans'
+" Plug 'soulston/vim-listtrans'
 
 " Git Gutter - show add/remove/etc in gutter
-" Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 
 " Fuzzy find plugin that also does buffer management
 " - Use :Files
@@ -342,6 +346,11 @@ Plug 'davidhalter/jedi-vim'
 " Parenthasies matching highlighting while inside
 Plug 'andymass/vim-matchup'
 
+" Better(?) status bar
+Plug 'itchyny/lightline.vim'
+
+" Nerd Tree - better file manager
+Plug 'preservim/nerdtree'
 " 
 
 " Initialize plugin system
@@ -522,5 +531,6 @@ end
 " colo gruvbox
 " colo xcodedarkhc
 " colo onedark
-colo jellybeans
+" colo jellybeans
 " colo solarized
+colo nord
