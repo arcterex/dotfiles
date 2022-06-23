@@ -346,6 +346,9 @@ Plug 'andymass/vim-matchup'
 " NERD tree for file management
 Plug 'preservim/nerdtree'
 
+" Nord theme plugin
+Plug 'arcticicestudio/nord-vim'
+
 " Initialize plugin system
 call plug#end()
 
@@ -564,8 +567,9 @@ end
 " colo gruvbox
 " colo xcodedarkhc
 " colo onedark
-colo jellybeans
+" colo jellybeans
 " colo solarized
+colo nord
 
 " Salt files get YAML handline
 autocmd BufNewFile,BufRead *.sls set syntax=yaml ts=2 sts=2 sw=2 expandtab
