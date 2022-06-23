@@ -47,7 +47,7 @@ set backspace=indent,eol,start 	" allow backspacing over indentation
 " Whitespace setup
 " ----------------
 " when you do "show list" what shows up
-set showbreak=↪\ 
+set showbreak=↪\
 set listchars=tab:→\ ,eol:↲,trail:•,extends:›,precedes:‹,nbsp:·,trail:·,eol:↲
 
 " From https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim
@@ -100,7 +100,6 @@ set viewoptions-=options
 " Syntax extras
 " -------------
 au BufNewFile,BufRead *.json set ft=javascript	" add json syntax highlighting
-autocmd BufNewFile,BufRead *.sls set syntax=yaml
 
 " Filetype stuff
 " --------------
@@ -139,7 +138,8 @@ set colorcolumn=81
 " Leader and key remapping
 " Not 100% sure about a bunch of this stuff, but lets try anyway
 " ------------------------
-let mapleader = ","
+"  This sets the leader key for running commands to , from the default \
+" let mapleader = ","
 
 
 
@@ -174,7 +174,7 @@ nnoremap <silent> N   N:call HLNext(0.4)<cr>
 " -----------------
 " switch quickly from window to window and maximize the window with ^j and ^k
 map <C-J> <C-W>j<C-W>_
-map <C-K> <C-W>k<C-W>_ 
+map <C-K> <C-W>k<C-W>_
 
 " Next and previous tab shortcut to ctrl-l/h
 " map  <C-l> :tabn<CR>
@@ -220,7 +220,7 @@ map <leader>L              :wincmd L<cr>
 map <leader>J              :wincmd J<cr>
 
 " Close the window
-map <leader>wc :wincmd q<cr>  
+map <leader>wc :wincmd q<cr>
 " Rotate windows
 map <leader>wr <C-W>r
 
@@ -230,9 +230,9 @@ map <leader>K              :wincmd K<cr>
 map <leader>L              :wincmd L<cr>
 map <leader>J              :wincmd J<cr>
 
-" Keep selection when shifting 
-vnoremap < <gv 
-vnoremap > >gv 
+" Keep selection when shifting
+vnoremap < <gv
+vnoremap > >gv
 
 " Buffer management
 " This allows buffers to be hidden if you've modified a buffer.
@@ -258,10 +258,10 @@ nmap <leader>bl :ls<CR>
 
 " Writing stuff
 " =============
-" Listtranslate stuffnmap  
+" Listtranslate stuffnmap
 
-nmap ;l   :call ListTrans_toggle_format()<CR>
-vmap ;l   :call ListTrans_toggle_format('visual')<CR>
+" nmap ;l   :call ListTrans_toggle_format()<CR>
+" vmap ;l   :call ListTrans_toggle_format('visual')<CR>
 
 " PLUGINS!
 " Lets add some plugins bitches
@@ -300,7 +300,6 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'arzg/vim-colors-xcode'
 Plug 'nanotech/jellybeans.vim'
 Plug 'wojciechkepka/bogster'
-Plug 'arcticicestudio/nord-vim'
 
 " Statusline stuff
 Plug 'vim-airline/vim-airline'
@@ -315,8 +314,6 @@ Plug 'nathanaelkane/vim-indent-guides'
 " Move chunks of code around easier
 Plug 'zirrostig/vim-schlepp'
 
-" Better syntax parsing (I think)
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Tab management
 Plug 'kien/tabman.vim'
 
@@ -324,7 +321,7 @@ Plug 'kien/tabman.vim'
 " Plug 'soulston/vim-listtrans'
 
 " Git Gutter - show add/remove/etc in gutter
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 
 " Fuzzy find plugin that also does buffer management
 " - Use :Files
@@ -346,12 +343,8 @@ Plug 'davidhalter/jedi-vim'
 " Parenthasies matching highlighting while inside
 Plug 'andymass/vim-matchup'
 
-" Better(?) status bar
-Plug 'itchyny/lightline.vim'
-
-" Nerd Tree - better file manager
+" NERD tree for file management
 Plug 'preservim/nerdtree'
-" 
 
 " Initialize plugin system
 call plug#end()
@@ -399,7 +392,7 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 
 " vim-schlepp setup - just use arrow keys to move things around
-" Kinda fucking awesome :) 
+" Kinda fucking awesome :)
 vmap <unique> <up>    <Plug>SchleppUp
 vmap <unique> <down>  <Plug>SchleppDown
 vmap <unique> <left>  <Plug>SchleppLeft
@@ -412,6 +405,46 @@ let g:tabman_focus  = '<leader>mf'
 let g:tabman_width = 25
 let g:tabman_side = 'left'
 let g:tabman_specials = 0
+
+" NERDTree mappings
+"
+"
+" Toggle NERDTREE with <F2>
+nmap <F2> :NERDTreeToggle<CR>
+
+" Start NERDTree and leave the cursor in it.
+" autocmd VimEnter * NERDTree
+
+" Start NERDTree and put the cursor back in the other window.
+" autocmd VimEnter * NERDTree | wincmd p
+
+" Start NERDTree when Vim is started without file arguments.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+
+" Start NERDTree. If a file is specified, move the cursor to its window.
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+
+" Start NERDTree, unless a file or session is specified, eg. vim -S session_file.vim.
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists('s:std_in') && v:this_session == '' | NERDTree | endif
+
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+"autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+" Open the existing NERDTree on each new tab.
+"autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
+
+" Mirror the NERDTree before showing it. This makes it the same on all tabs.
+"nnoremap <C-n> :NERDTreeMirror<CR>:NERDTreeFocus<CR>
 
 " Fzf setup
 " =========
@@ -450,7 +483,7 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " Map finding files to ctrl-p
 nnoremap <C-P> :Files<CR>
 nnoremap <C-I> :Buffers<CR>
-" DFW :( 
+" DFW :(
 " nnoremap <C-Space> :Buffers<CR>
 
 " Autocomplete with mu-complete config
@@ -531,6 +564,8 @@ end
 " colo gruvbox
 " colo xcodedarkhc
 " colo onedark
-" colo jellybeans
+colo jellybeans
 " colo solarized
-colo nord
+
+" Salt files get YAML handline
+autocmd BufNewFile,BufRead *.sls set syntax=yaml ts=2 sts=2 sw=2 expandtab
