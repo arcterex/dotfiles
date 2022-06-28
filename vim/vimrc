@@ -132,8 +132,18 @@ endif
 
 " Highlight when a line goes over 81 characters
 " Doesn't seem to work
+" highlight ColorColumn ctermbg=magenta
+" set colorcolumn=81
+
+"====[ Make the 81st column stand out ]====================
+ 
+"    " EITHER the entire 81st column, full-screen...
+"    highlight ColorColumn ctermbg=magenta
+"    set colorcolumn=81
+ 
+" OR ELSE just the 81st column of wide lines...
 highlight ColorColumn ctermbg=magenta
-set colorcolumn=81
+call matchadd('ColorColumn', '\%81v', 100)
 
 " Leader and key remapping
 " Not 100% sure about a bunch of this stuff, but lets try anyway
@@ -349,6 +359,9 @@ Plug 'preservim/nerdtree'
 " Nord theme plugin
 Plug 'arcticicestudio/nord-vim'
 
+" HAProxy syntax highlighting
+Plug 'Joorem/vim-haproxy'
+
 " Initialize plugin system
 call plug#end()
 
@@ -412,8 +425,8 @@ let g:tabman_specials = 0
 " NERDTree mappings
 "
 "
-" Toggle NERDTREE with <F2>
-nmap <F2> :NERDTreeToggle<CR>
+" Toggle NERDTREE with \f
+nmap <Leader>f :NERDTreeToggle<CR>
 
 " Start NERDTree and leave the cursor in it.
 " autocmd VimEnter * NERDTree
@@ -422,8 +435,8 @@ nmap <F2> :NERDTreeToggle<CR>
 " autocmd VimEnter * NERDTree | wincmd p
 
 " Start NERDTree when Vim is started without file arguments.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
 " Start NERDTree. If a file is specified, move the cursor to its window.
 "autocmd StdinReadPre * let s:std_in=1
